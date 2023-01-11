@@ -1,23 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [textValue, setTextValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [result, setResult] = useState("");
+  const handleText = () => {
+    setResult(textValue.replace("*", inputValue));
+    setInputValue("");
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form
+        className="form"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <textarea
+          placeholder="Enter the text and put * in the place where should be changed"
+          cols="40"
+          rows="30"
+          value={textValue}
+          onChange={(e) => {
+            setTextValue(e.target.value);
+          }}
+        ></textarea>
+        <input
+          type="text"
+          placeholder="*"
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
+        />
+        <button onClick={handleText}>Generate</button>
+        <textarea
+          cols="40"
+          rows="30"
+          placeholder="Result"
+          value={result}
+          onChange={(e) => {
+            setResult(e.target.value);
+          }}
+        ></textarea>
+      </form>
     </div>
   );
 }
